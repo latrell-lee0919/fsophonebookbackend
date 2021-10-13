@@ -1,0 +1,27 @@
+{
+  "name": "phonebook-backend",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/latrell-lee0919/fsophonebookbackend.git"
+  },
+  "author": "Latrell Lee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/latrell-lee0919/fsophonebookbackend/issues"
+  },
+  "homepage": "https://github.com/latrell-lee0919/fsophonebookbackend#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
+}
