@@ -86,27 +86,33 @@ app.delete('/api/persons/:id', (request, response) => {
 
 app.post('/api/persons', (request, response) => {
     const body = request.body
-    const matchedName = persons.find(person => person.name === body.name)
 
-    if(!body.name || !body.number) {
+    if(body.name === undefined || body.number === undefined) {
         return response.status(400).json({
             error: 'content missing'
         })
-    } else if (matchedName) {
-        return response.status(400).json({
-            error: 'name must be unique'
-        })
     }
+    // const matchedName = persons.find(person => person.name === body.name)
 
-    const person = {
-        id: generateId(),
+    // if(!body.name || !body.number) {
+    //     return response.status(400).json({
+    //         error: 'content missing'
+    //     })
+    // } else if (matchedName) {
+    //     return response.status(400).json({
+    //         error: 'name must be unique'
+    //     })
+    // }
+
+    const person = new Entry({
         name: body.name,
         number: body.number
-    }
+    })
 
-    persons = persons.concat(person)
-
-    response.json(person)
+    person.save()
+    .then(savedPerson => {
+        response.json(savedPerson)
+    })
 })
 
 const unknownEndpoint = (request, response) => {
