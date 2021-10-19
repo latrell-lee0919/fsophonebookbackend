@@ -63,25 +63,28 @@ app.get('/info', (request, response) => {
         `)
 })
 
-app.get('/api/persons', (request, response) => {
+app.get('/api/persons', (request, response, next) => {
     Entry.find({})
     .then(entries => {
         response.json(entries)
     })
+    .catch(error => next(error))
 })
 
-app.get('/api/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response, next) => {
     Entry.findById(request.params.id)
     .then(entry => {
         response.json(entry)
     })
+    .catch(error => next(error))
 })
 
-app.delete('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    persons = persons.filter(person => person.id !== id)
-
-    response.status(204).end()
+app.delete('/api/persons/:id', (request, response, next) => {
+    Entry.findByIdAndRemove(request.params.id)
+    .then(result => {
+        response.status(204).end()
+    })
+    .catch(error => next(error))
 })
 
 app.post('/api/persons', (request, response) => {
@@ -113,6 +116,21 @@ app.post('/api/persons', (request, response) => {
     .then(savedPerson => {
         response.json(savedPerson)
     })
+})
+
+app.put('/api/persons/:id', (request, response, next) => {
+    const body = request.body
+
+    const person = {
+        number: body.number
+    }
+
+    Entry.findByIdAndUpdate(request.params.id, person, { new: true })
+    .then(updatedPerson => {
+        response.json(updatedPerson)
+    })
+    .catch(error => next(error))
+
 })
 
 const unknownEndpoint = (request, response) => {
