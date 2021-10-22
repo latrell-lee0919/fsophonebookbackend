@@ -17,9 +17,13 @@ mongoose.connect(url)
 const entrySchema = mongoose.Schema({
     name: {
       type: String,
+      minlength: 3,
       unique: true
     },
-    number: {type: String}
+    number: {
+      type: String,
+      minlength: 8
+    }
 })
 entrySchema.plugin(uniqueValidator)
 
